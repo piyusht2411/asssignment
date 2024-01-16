@@ -8,6 +8,7 @@ interface User {
   password: string;
   gender: string,
   imageUrl: string;
+  role:String;
 
 }
 
@@ -36,6 +37,12 @@ const schema = new Schema<User>({
   gender: {
     type: String,
     enum: ["Male", "Female"]
+  },
+  role:{
+    type: String,
+    enum: ["admin", "user"],
+    default: "user"
+
   },
   imageUrl: { type: String, },
 }, { timestamps: true });

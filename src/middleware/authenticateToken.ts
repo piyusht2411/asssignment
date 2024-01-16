@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken' ;
 
-
+import User from '../model/schema';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authToken = req.cookies.authToken ;
@@ -65,3 +65,18 @@ export const ownership = async (
       return res.sendStatus(400);
   }
 };
+export const restrict = (role:String) =>{
+  return async(req:Request, res:Response, next:NextFunction)=>{
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if(!user){
+      return res.status(400).json({message:"Invalid token"});
+    }
+    if(user.role!== role){
+      return res.status(403).json({message:"You are not authorized to delete other users"});
+    }
+    next();
+    
+
+  }
+}
