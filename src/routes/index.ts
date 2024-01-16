@@ -1,7 +1,7 @@
 import express, {Router, Express, Request, Response , Application} from 'express';
 import {register} from '../controllers/register';
 import {home} from '../controllers/home';
-import {login} from '../controllers/login';
+import {login, sendMail} from '../controllers/login';
 import { getuserdata } from '../controllers/getuserdata';
 import {authenticateToken, ownership} from '../middleware/authenticateToken';
 import { logout } from '../controllers/logout';
@@ -21,4 +21,5 @@ router.put('/user/:id', authenticateToken, updateUser);
 router.delete('/user/:id',authenticateToken, ownership, deleteUser);
 router.get('/getAllUsers',getAllUsers );
 router.post('/uploadimgae',upload.single('image'), uploadImage);
+router.get('/sendMail', sendMail);
 export default router;

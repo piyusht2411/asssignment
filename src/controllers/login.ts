@@ -2,6 +2,7 @@ import express, { Express, Request, Response , Application, NextFunction} from '
 import  { RequestHandler } from 'express';
 import jwt from "jsonwebtoken";
 import { compareSync } from "bcrypt";
+import nodemailer from "nodemailer";
 import User from '../model/schema';
   export const login:RequestHandler = async(req, res, next) => {
     // try{
@@ -75,4 +76,31 @@ import User from '../model/schema';
         next(err) ;
     }
     
+};
+
+export const sendMail:RequestHandler = async(req, res, next) => {
+
+    const transporter = await nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure:false,
+        auth: {
+            user: 'name.kovacek74@ethereal.email',
+            pass: '3GdZ3g8VSex2uA2UP4'
+        }
+    });
+
+    
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: '"Piyush" <piyush@thakur.com>', // sender address
+          to: "piyush@gmail.com", // list of receivers
+          subject: "Hello ", // Subject line
+          text: "Hello bro", // plain text body
+          html: "<b>Hello world?</b>", // html body
+        });
+        res.send('message send');
+    
+    
+
 };
