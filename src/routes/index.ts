@@ -8,6 +8,8 @@ import { logout } from '../controllers/logout';
 import { updateUser } from '../controllers/updateUser';
 import { deleteUser } from '../controllers/deleteUser';
 import { getAllUsers } from '../controllers/getAllUsers';
+import {upload} from "../helper/imagemulter";
+import {uploadImage} from "../helper/imageUplaodCloudinary";
 
 const router = Router();
 router.get('/', home);
@@ -18,4 +20,5 @@ router.get('/logout', logout);
 router.put('/user/:id', authenticateToken, updateUser);
 router.delete('/user/:id',authenticateToken, ownership, deleteUser);
 router.get('/getAllUsers',getAllUsers );
+router.post('/uploadimgae',upload.single('image'), uploadImage);
 export default router;
