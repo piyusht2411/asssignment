@@ -1,0 +1,21 @@
+import express, {Router, Express, Request, Response , Application} from 'express';
+import {register} from '../controllers/register';
+import {home} from '../controllers/home';
+import {login} from '../controllers/login';
+import { getuserdata } from '../controllers/getuserdata';
+import {authenticateToken, ownership} from '../middleware/authenticateToken';
+import { logout } from '../controllers/logout';
+import { updateUser } from '../controllers/updateUser';
+import { deleteUser } from '../controllers/deleteUser';
+import { getAllUsers } from '../controllers/getAllUsers';
+
+const router = Router();
+router.get('/', home);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/getuserdata',authenticateToken, getuserdata);
+router.get('/logout', logout);
+router.put('/user/:id', authenticateToken, updateUser);
+router.delete('/user/:id',authenticateToken, ownership, deleteUser);
+router.get('/getAllUsers',getAllUsers );
+export default router;
